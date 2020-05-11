@@ -66,12 +66,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         });
 
 
-//        发送验证码
+// 发送验证码
         send_verfied_bug.setOnClickListener(v->{
-            //判断咱们手机号是否为空，判断手机号是否正确，发送咱们验证码
+//判断咱们手机号是否为空，判断手机号是否正确，发送咱们验证码
             String phonenum = phone_num.getText().toString();
             if( !TextUtils.isEmpty(phonenum) && isMobileNO(phonenum)){
-//                  表示可以发送验证码  type 4表示登录发送验证码
+// 表示可以发送验证码  type 4表示登录发送验证码
                 mPresenter.getVerified(phonenum,"4");
             }else Toast.makeText(LoginActivity.this, "请输入正确得手机号", Toast.LENGTH_SHORT).show();
         });
@@ -82,24 +82,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             edit_sms_code = verfied.getText().toString();
             if( !TextUtils.isEmpty(edit_phone_num) && isMobileNO(edit_phone_num)){
                 if( !TextUtils.isEmpty(edit_sms_code)){
-//                    需要用正则表达式判断验证码是否是6位，且都是数字
+// 需要用正则表达式判断验证码是否是6位，且都是数字
                     Pattern pattern = Pattern.compile("\\d{6}");
                     boolean matches = pattern.matcher(edit_sms_code).matches();
                     if(matches){
- //                    判断你得手机号，和你发送得验证码是否正确，如果正确，调用登录接口
-//                        提交服务器进行判读
+ // 判断你得手机号，和你发送得验证码是否正确，如果正确，调用登录接口
+// 提交服务器进行判读
                         Log.e("TAG",edit_phone_num+"验证码值："+edit_sms_code);
 
                         mPresenter.checkSmsCode(edit_phone_num,edit_sms_code,"4");
 
 
-//                    如果不正确，提示用户
+// 如果不正确，提示用户
                     }else Toast.makeText(LoginActivity.this, "验证码输入错误", Toast.LENGTH_SHORT).show();
                 }else Toast.makeText(LoginActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
             }else Toast.makeText(LoginActivity.this, "请输入正确得手机号", Toast.LENGTH_SHORT).show();
         });
     }
-//风控系统
+
     @Override
     public int getLayoutID() {
         return R.layout.activity_login;
@@ -108,7 +108,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
 
-//    发送验证码返回
+// 发送验证码返回
     @Override
     public void getVerified(VerfiedBean s) {
         if(s.getCode() ==1){
@@ -148,14 +148,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     }
 
-//    验证码是否正确返回
+//验证码是否正确返回
     @Override
     public void checkSmsCodeResult(VerfiedBean verfiedBean) {
 
         if(verfiedBean.getCode() ==1){
-//            表明验证码正确
-//            自动去登录操作了。
-//            edit_phone_num,edit_sms_code
+
             mPresenter.login(edit_phone_num,edit_sms_code);
 
         }else Toast.makeText(this, "验证码输入错误", Toast.LENGTH_SHORT).show();
@@ -163,11 +161,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     }
 
-    /**
-     * 验证手机号码----工具类
-     * @param mobiles
-     * @return
-     */
+
     public static boolean isMobileNO(String mobiles){
         boolean flag = false;
         try{
@@ -175,14 +169,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             Matcher m = p.matcher(mobiles);
             flag = m.matches();
         }catch(Exception e){
-//            LOG.error("验证手机号码错误", e);
+
             Log.e("TAG","手机号错误"+e.getMessage());
             flag = false;
         }
         return flag;
     }
 
-    /*public void startRegister(View view) {
 
-    }*/
 }

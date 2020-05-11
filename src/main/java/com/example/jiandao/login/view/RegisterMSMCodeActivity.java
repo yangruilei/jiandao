@@ -53,18 +53,18 @@ public class RegisterMSMCodeActivity extends BaseActivity<RegisterMSMPresenter> 
 
     @Override
     public void initLinstener() {
-//        获取验证码
+// 获取验证码
         reg_send_verfied_bug.setOnClickListener(v->{
 
             String phonenum = reg_phone_num.getText().toString();
             if( !TextUtils.isEmpty(phonenum) && isMobileNO(phonenum)){
-//                  表示可以发送验证码  type 1表示注册发送验证码
+// 表示可以发送验证码  type 1表示注册发送验证码
                 mPresenter.getVerified(phonenum,"1");
             }else Toast.makeText(RegisterMSMCodeActivity.this, "请输入正确得手机号", Toast.LENGTH_SHORT).show();
         });
 
 
-//        注册
+// 注册
         reg_bug.setOnClickListener(v -> {
 
             reg_edit_phone_num = reg_phone_num.getText().toString();

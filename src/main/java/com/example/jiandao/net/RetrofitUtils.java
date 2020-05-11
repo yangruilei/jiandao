@@ -96,8 +96,6 @@ public class RetrofitUtils implements INetWork{
                         try {
                         String body = responseBody.string();
 
-//                        Log.e("TAG","网络请求GET方法打印："+body);
-
                         Type[] genericInterfaces = netCallBack.getClass().getGenericInterfaces();
                         Type[] actualTypeArguments = ((ParameterizedType) genericInterfaces[0]).getActualTypeArguments();
 
@@ -125,10 +123,6 @@ public class RetrofitUtils implements INetWork{
                 });
 
 
-        //        做网络请求    重要吗？
-
-        //将请求到的结果通过咱们的   INetCallBack   返回的
-
 
     }
 
@@ -151,8 +145,6 @@ public class RetrofitUtils implements INetWork{
 
                         try {
                             String body = responseBody.string();
-
-//                            LogUtils.e("TAG","网络请求GET方法打印："+body);
 
                             Type[] genericInterfaces = netCallBack.getClass().getGenericInterfaces();
                             Type[] actualTypeArguments = ((ParameterizedType) genericInterfaces[0]).getActualTypeArguments();
@@ -224,7 +216,6 @@ public class RetrofitUtils implements INetWork{
                             netCallBack.onSuccess(t);
 
                         } catch (Exception e) {
-//                            e.printStackTrace();
 
                             netCallBack.onError(new Throwable("请求失败，可能是解析失败"));
 
@@ -254,8 +245,6 @@ public class RetrofitUtils implements INetWork{
     }
 
 
-//    网络请求
-
 
 //应用拦截器、网络拦截器
     private Interceptor addNetHeaderInterceptor(){
@@ -265,8 +254,7 @@ public class RetrofitUtils implements INetWork{
 
                 Request request = chain.request();
                 Request.Builder requestbuilder = request.newBuilder();
-//                        .header("Cache-control", "no-cache")
-//                        .header("sigan","*********");
+
                 Request build = requestbuilder.build();
                 return chain.proceed(build);
             }
@@ -275,13 +263,7 @@ public class RetrofitUtils implements INetWork{
     }
 
 
-    /**
-     * 两种形式--服务器支持缓存，设置标志就好了，如果不支持，就修改相应头。让服务器支持缓存
-     *
-     * 什么情况下使用缓存？  --没网络的时候，网络请求进行缓存
-     *
-     * @return
-     */
+
     private  Interceptor addCacheInterceptor(){
 
         Interceptor cacheInterceptor = new Interceptor() {
@@ -295,10 +277,8 @@ public class RetrofitUtils implements INetWork{
                 }
                 Response response = chain.proceed(request);
                 if(isNetWorkValid()){
-//                    有网络的情况下，咱们就不使用缓存
                     response.newBuilder()
                             .header("Cache-Control","public,max-age="+0)
-//                            清楚头信息，如果服务器不知粗--看网络请求返回结果
                             .removeHeader("")
                             .build();
                 }else {

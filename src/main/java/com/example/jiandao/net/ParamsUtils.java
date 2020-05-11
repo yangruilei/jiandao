@@ -4,9 +4,7 @@ import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
 
-/*
- * created by Cherry on 2019-12-27
- **/
+
 public class ParamsUtils {
 
     private static String SHA1_KEY = "K;9)Bq|ScMF1h=Vp5uA-G87d(_fi[aP,.w^{vQ:W";
@@ -26,13 +24,7 @@ public class ParamsUtils {
         hashMap.put("nonce", nonce);
         hashMap.put("timestamp", timestamp);
         hashMap.put("signature",getSHA1(timestamp, nonce));
-/*
-        String toke = MvpUserManager.getToke();
 
-        if(!TextUtils.isEmpty(toke)){
-
-            hashMap.put(RequestKey.TOKEN,toke);
-        }*/
         return hashMap;
     }
 
@@ -41,7 +33,7 @@ public class ParamsUtils {
         try {
             String[] array = new String[]{SHA1_KEY, timestamp, nonce};
             StringBuffer sb = new StringBuffer();
-            // 字符串排序
+
             Arrays.sort(array);
             for (int i = 0; i < 3; i++) {
                 sb.append(array[i]);

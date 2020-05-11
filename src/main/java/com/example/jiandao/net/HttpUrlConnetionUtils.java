@@ -2,11 +2,7 @@ package com.example.jiandao.net;
 
 import java.util.HashMap;
 
-/**
- * httpurl   请求方式---   切换使用  不需要更改代码，做到网络请求的切换
- * 工厂设计模式
- * 工厂设计类
- */
+
 public class HttpUrlConnetionUtils implements INetWork{
 
     private static  HttpUrlConnetionUtils httpUrlConnetionUtils;
@@ -27,8 +23,7 @@ public class HttpUrlConnetionUtils implements INetWork{
 
     @Override
     public <T> void get(String url,INetCallBack<T> netCallBack) {
-//        也做网络请求
-//将请求到的结果通过咱们的   INetCallBack   返回的
+
     }
 
     @Override
