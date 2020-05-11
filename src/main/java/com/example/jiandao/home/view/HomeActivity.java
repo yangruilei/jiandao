@@ -81,9 +81,9 @@ public class HomeActivity extends BaseActivity<HomePresenterImpl> implements Hom
     @Override
     public void initData() {
         mPresenter.getBannerView();
-
 //        mPresenter.getHomeTabList();
 
+//        在Activity中获取返回键
     }
 
     @Override

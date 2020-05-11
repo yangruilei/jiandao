@@ -2,7 +2,6 @@ package com.example.jiandao.home.model;
 
 import android.util.Log;
 
-
 import com.example.jiandao.home.contract.RecommendContract;
 import com.example.jiandao.net.INetCallBack;
 import com.example.jiandao.net.NetWorkFactory;

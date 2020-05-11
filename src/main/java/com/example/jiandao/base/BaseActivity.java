@@ -1,12 +1,9 @@
 package com.example.jiandao.base;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.lang.reflect.ParameterizedType;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView{
 

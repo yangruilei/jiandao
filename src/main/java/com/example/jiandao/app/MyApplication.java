@@ -2,12 +2,14 @@ package com.example.jiandao.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.mmkv.MMKV;
 
 public class MyApplication extends Application {
 
@@ -19,6 +21,7 @@ public class MyApplication extends Application {
         super.onCreate();
         myApplication = this;
 //        初始化内存泄漏检测工具
+        MMKV.initialize(this);
         initLeakCanary();
 //        注册监听每个acitivyt的生命周期，便于栈管理
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks);

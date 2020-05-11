@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-
 import com.example.jiandao.app.MyApplication;
 import com.example.jiandao.net.api.NetApi;
 import com.example.jiandao.net.api.URLConstants;
@@ -76,7 +75,6 @@ public class RetrofitUtils implements INetWork{
         return retrofitUtils;
     }
 
-
     @Override
     public <T> void get(String url, final INetCallBack<T> netCallBack) {
 
@@ -98,7 +96,7 @@ public class RetrofitUtils implements INetWork{
                         try {
                         String body = responseBody.string();
 
-                        Log.e("TAG","网络请求GET方法打印："+body);
+//                        Log.e("TAG","网络请求GET方法打印："+body);
 
                         Type[] genericInterfaces = netCallBack.getClass().getGenericInterfaces();
                         Type[] actualTypeArguments = ((ParameterizedType) genericInterfaces[0]).getActualTypeArguments();
@@ -154,7 +152,7 @@ public class RetrofitUtils implements INetWork{
                         try {
                             String body = responseBody.string();
 
-                            LogUtils.e("TAG","网络请求GET方法打印："+body);
+//                            LogUtils.e("TAG","网络请求GET方法打印："+body);
 
                             Type[] genericInterfaces = netCallBack.getClass().getGenericInterfaces();
                             Type[] actualTypeArguments = ((ParameterizedType) genericInterfaces[0]).getActualTypeArguments();
@@ -214,7 +212,7 @@ public class RetrofitUtils implements INetWork{
                         try {
                             String body = responseBody.string();
 
-                            LogUtils.e("TAG","网络请求GET方法打印："+body);
+                            LogUtils.e("TAG","网络请求POST方法打印=："+body);
 
                             Type[] genericInterfaces = netCallBack.getClass().getGenericInterfaces();
                             Type[] actualTypeArguments = ((ParameterizedType) genericInterfaces[0]).getActualTypeArguments();
@@ -225,8 +223,11 @@ public class RetrofitUtils implements INetWork{
                             T t = gson.fromJson(body, type);
                             netCallBack.onSuccess(t);
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        } catch (Exception e) {
+//                            e.printStackTrace();
+
+                            netCallBack.onError(new Throwable("请求失败，可能是解析失败"));
+
                         }
 
                     }
@@ -235,6 +236,7 @@ public class RetrofitUtils implements INetWork{
                     public void onError(Throwable e) {
 
                         Log.e("TAG","请问错误="+e.getMessage());
+                        netCallBack.onError(new Throwable("请求失败，可能是解析失败"));
 
                     }
 

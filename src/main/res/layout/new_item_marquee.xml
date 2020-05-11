@@ -3,12 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00ff00"
-    tools:context=".home.view.fragment.NewsFragment">
+   >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/news_recycleview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+
+
+    <TextView
+        android:id="@+id/xxxxx"
+        android:layout_width="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#708090"
+        android:text="交通"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.jiandao;
 
 import android.util.Log;
 
-
 import com.example.jiandao.base.BaseModel;
 import com.example.jiandao.net.INetCallBack;
 import com.example.jiandao.net.NetWorkFactory;

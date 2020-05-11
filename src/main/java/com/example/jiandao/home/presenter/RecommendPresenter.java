@@ -1,7 +1,5 @@
 package com.example.jiandao.home.presenter;
 
-import android.util.Log;
-
 import com.example.jiandao.base.BasePresenter;
 import com.example.jiandao.home.bean.ColunmBean;
 import com.example.jiandao.home.bean.NewsBean;

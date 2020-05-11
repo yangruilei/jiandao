@@ -1,39 +1,31 @@
 package com.example.jiandao.home.view.fragment;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.jiandao.R;
-import com.example.jiandao.base.BaseFragment;
-import com.example.jiandao.home.Banner_Indicator;
-import com.example.jiandao.home.adapter.NewsBannerAdapter;
+import com.example.jiandao.base.BaseLayFragment;
+import com.example.jiandao.home.adapter.NewsAdapter;
 import com.example.jiandao.home.bean.NewsBean;
 import com.example.jiandao.home.contract.NewsFragmentContract;
 import com.example.jiandao.home.presenter.NewsPresenter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import cn.jzvd.Jzvd;
 
 /**
- * A simple {@link Fragment} subclass.
+ *新闻列表页面
+ * 多布局得页面
+ * 4种布局
  */
-public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsFragmentContract.INewsView {
+public class NewsFragment extends BaseLayFragment<NewsPresenter> implements NewsFragmentContract.INewsView {
 
-    private String tabID;
-    private List<View> views=new ArrayList<>();
-    private ViewPager mVpBanner;
-    private Banner_Indicator mIndicatorBanner;
-    private int currentPosi;
+    private  String tabID;
+
+    private RecyclerView recyclerView;
+
+    private NewsAdapter newsAdapter;
 
 
     public NewsFragment(String tabID) {
@@ -47,86 +39,56 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsFra
 
     @Override
     protected void initLinstener() {
-
     }
 
     @Override
     protected void initData() {
-
         mPresenter.getRecommendList(tabID);
-
     }
 
     @Override
     protected void initView(View view) {
-
-        mVpBanner = (ViewPager) view.findViewById(R.id.banner_vp);
-        mIndicatorBanner = (Banner_Indicator) view.findViewById(R.id.banner_indicator);
+        recyclerView = view.findViewById(R.id.news_recycleview);
     }
-
     @Override
     public int getLayoutID() {
         return R.layout.fragment_news;
     }
 
+    /**
+     * Fragment是否处于可见状态
+     * @param isVisible
+     */
     @Override
-    public void setRecommendList(NewsBean data) {
+    public void isCurrentVisibleToUser(boolean isVisible) {
+//        当前Framgnet是显示还是隐藏
 
-        initBanner(data);
-
+        if(newsAdapter !=null) newsAdapter.isCurrentVisibleToUser(isVisible);
     }
 
-    private void initBanner(final NewsBean data) {
-        for (int i = 0; i < data.getData().getBanner_list().size(); i++) {
-            View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.news_banner_item,null);
-            TextView text = inflate.findViewById(R.id.banner_content);
-            ImageView image = inflate.findViewById(R.id.banner_image);
-            text.setText(data.getData().getBanner_list().get(i).getDescription());
-            Glide.with(getContext()).load(data.getData().getBanner_list().get(i).getImage_url()).into(image);
-            views.add(inflate);
-            final int finalI = i;
-            inflate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "点击了"+ finalI, Toast.LENGTH_SHORT).show();
-                }
-            });
+    @Override
+    public void setRecommendList(NewsBean newsBean) {
+        //LinearLayoutManager是用来做列表布局，也就是单列的列表
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        newsAdapter = new NewsAdapter(getActivity(),newsBean);
+        recyclerView.setAdapter(newsAdapter);
+    }
+
+
+
+//    后期做完善--视频播放得bug
+    /*@Override
+    public void onBackPressed() {
+        if (Jzvd.backPress()) {
+            return;
         }
-        NewsBannerAdapter newsBannerAdapter = new NewsBannerAdapter(views);
-        mVpBanner.setAdapter(newsBannerAdapter);
-        mIndicatorBanner.setBannerImageSize(data.getData().getBanner_list().size());
-        mIndicatorBanner.setCurrentBannerItem(0);
-        mVpBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mIndicatorBanner.setCurrentBannerItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                currentPosi++;
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //取余显示
-                        mVpBanner.setCurrentItem(currentPosi%(data.getData().getBanner_list().size()));
-                    }
-                });
-
-            }
-        };
-        timer.schedule(timerTask,2000,2000);
+        super.onBackPressed();
+    }*/
+    @Override
+    public void onPause() {
+        super.onPause();
+        Jzvd.releaseAllVideos();
     }
+
 }

@@ -2,13 +2,11 @@ package com.example.jiandao.home.view.fragment;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.jiandao.R;
@@ -58,19 +56,16 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
         tabLayout = view.findViewById(R.id.mytablayout);
 
         viewPager = view.findViewById(R.id.myviewpage);
-
-
-
     }
-
 
    private void initTab(final ColunmBean columList){
        newsFragmentAdapter = new NewsFragmentAdapter(getChildFragmentManager(),fragments);
        viewPager.setAdapter(newsFragmentAdapter);
        tabLayout.setupWithViewPager(viewPager);
 
+       viewPager.setOffscreenPageLimit(columList.getData().getList().size());
+
        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-           @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
            @Override
            public void onTabSelected(TabLayout.Tab tab) {
               for (int i = 0; i < columList.getData().getList().size(); i++) {
@@ -93,7 +88,6 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
            public void onTabReselected(TabLayout.Tab tab) {
            }
        });
-
 
     }
 
